@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <cpp/Urg_driver.h>
+#include <lms/math/polyline.h>
 #include <lms/math/vertex.h>
 #include <lms/module.h>
 
@@ -16,6 +17,8 @@ class HokuyoLidarImporter : public lms::Module {
 
    private:
     void printLidarData(const std::vector<long>& data);
+
+    lms::WriteDataChannel<lms::math::polyLine2f> data;
 
     qrk::Urg_driver m_lidar;
 
