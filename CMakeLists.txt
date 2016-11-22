@@ -17,4 +17,4 @@ endif()
 include_directories("include")
 
 add_library(hokuyo_lidar_importer MODULE ${SOURCES} ${HEADERS})
-target_link_libraries(hokuyo_lidar_importer PRIVATE lmscore urg_cpp)
+target_link_libraries(hokuyo_lidar_importer PRIVATE lmscore lms_math urg_cpp)

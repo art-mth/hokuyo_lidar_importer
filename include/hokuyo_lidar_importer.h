@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <cpp/Urg_driver.h>
+#include <lms/math/vertex.h>
 #include <lms/module.h>
 
 class HokuyoLidarImporter : public lms::Module {
@@ -17,6 +18,10 @@ class HokuyoLidarImporter : public lms::Module {
     void printLidarData(const std::vector<long>& data);
 
     qrk::Urg_driver m_lidar;
+
+    lms::math::vertex2f m_offsetFromOrigin;
+    double m_startAtDeg;
+    double m_stopAtDeg;
 };
 
 #endif  // HOKUYO_LIDAR_IMPORTER_H

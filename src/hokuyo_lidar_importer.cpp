@@ -5,18 +5,18 @@
 namespace {
 const char* kDeviceFile = "/dev/ttyACM0";
 const long kBaudrate = 115200;
-const double kStartDegree = -90;
-const double kEndDegree = 90;
 }
 
 bool HokuyoLidarImporter::initialize() {
+    configsChanged();
+
     if (!m_lidar.open(kDeviceFile, kBaudrate, qrk::Urg_driver::Serial)) {
         logger.error() << "Failed opening Hokuyo Lidar at " << kDeviceFile
                        << " error: " << m_lidar.what();
         return false;
     }
-    m_lidar.set_scanning_parameter(m_lidar.deg2step(kStartDegree),
-                                   m_lidar.deg2step(kEndDegree), 0);
+    m_lidar.set_scanning_parameter(m_lidar.deg2step(m_startAtDeg),
+                                   m_lidar.deg2step(m_stopAtDeg), 0);
     m_lidar.start_measurement();
 
     return true;
@@ -28,7 +28,12 @@ bool HokuyoLidarImporter::deinitialize() {
     return true;
 }
 
-void HokuyoLidarImporter::configsChanged() {}
+void HokuyoLidarImporter::configsChanged() {
+    m_offsetFromOrigin.x = config().get<float>("xOffsetFromOrigin");
+    m_offsetFromOrigin.y = config().get<float>("yOffsetFromOrigin");
+    m_startAtDeg = config().get<double>("startAtDeg", -90);
+    m_stopAtDeg = config().get<double>("stopAtDeg", 90);
+}
 
 bool HokuyoLidarImporter::cycle() {
     std::vector<long> data;

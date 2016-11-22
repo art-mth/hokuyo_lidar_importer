@@ -1,7 +1,7 @@
 #hokuyo_lidar_importer
 
 ###Setup
-Install the driver/library from [here](https://sourceforge.net/projects/urgnetwork/).
+Install the driver/library from [here](https://sourceforge.net/projects/urgnetwork/) or use the one from Conan.
 
 ###FAQ:
 
