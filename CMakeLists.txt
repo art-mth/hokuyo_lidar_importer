@@ -15,6 +15,6 @@ if((${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang") OR (${CMAKE_CXX_COMPILER_ID} STRE
 endif()
 
 include_directories("include")
-add_library(hokuyo_lidar_importer MODULE ${SOURCES} ${HEADERS})
 
-target_link_libraries(hokuyo_lidar_importer PRIVATE lmscore)
+add_library(hokuyo_lidar_importer MODULE ${SOURCES} ${HEADERS})
+target_link_libraries(hokuyo_lidar_importer PRIVATE lmscore urg_cpp)
