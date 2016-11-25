@@ -8,7 +8,7 @@ const long kBaudrate = 115200;
 }
 
 bool HokuyoLidarImporter::initialize() {
-    data = writeChannel<lms::math::polyLine2f>("HOKUYO_LIDAR_DATA");
+    data = writeChannel<lms::math::PointCloud2f>("HOKUYO_LIDAR_DATA");
     configsChanged();
 
     if (!m_lidar.open(kDeviceFile, kBaudrate, qrk::Urg_driver::Serial)) {
