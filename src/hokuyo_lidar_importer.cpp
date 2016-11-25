@@ -8,8 +8,8 @@ const long kBaudrate = 115200;
 }
 
 bool HokuyoLidarImporter::initialize() {
-    configsChanged();
     data = writeChannel<lms::math::polyLine2f>("HOKUYO_LIDAR_DATA");
+    configsChanged();
 
     if (!m_lidar.open(kDeviceFile, kBaudrate, qrk::Urg_driver::Serial)) {
         logger.error() << "Failed opening Hokuyo Lidar at " << kDeviceFile
@@ -30,8 +30,8 @@ bool HokuyoLidarImporter::deinitialize() {
 }
 
 void HokuyoLidarImporter::configsChanged() {
-    m_offsetFromOrigin.x = config().get<float>("xOffsetFromOrigin");
-    m_offsetFromOrigin.y = config().get<float>("yOffsetFromOrigin");
+    m_offsetFromOrigin.x = config().get<float>("xOffsetFromOrigin", 0);
+    m_offsetFromOrigin.y = config().get<float>("yOffsetFromOrigin", 0);
     m_startAtDeg = config().get<double>("startAtDeg", -90);
     m_stopAtDeg = config().get<double>("stopAtDeg", 90);
 }
@@ -43,7 +43,6 @@ bool HokuyoLidarImporter::cycle() {
                        << m_lidar.what();
         return false;
     }
-    printLidarData(rawDataPoints);
 
     data->points().clear();
     data->points().resize(rawDataPoints.size());
@@ -60,7 +59,7 @@ bool HokuyoLidarImporter::cycle() {
 }
 
 void HokuyoLidarImporter::printLidarData(const std::vector<long>& data) {
-    for (std::vector<long>::size_type i = 0; i < 1; i++) {
+    for (std::vector<long>::size_type i = 0; i < data.size(); i++) {
         long l = data[i];
         double radian = m_lidar.index2rad(i);
         long x = l * cos(radian);
