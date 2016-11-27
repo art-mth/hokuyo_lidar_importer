@@ -1,9 +1,8 @@
 #ifndef HOKUYO_LIDAR_IMPORTER_H
 #define HOKUYO_LIDAR_IMPORTER_H
 
-#include <atomic>
-#include <thread>
 #include <vector>
+#include <future>
 
 #include <cpp/Urg_driver.h>
 #include <lms/math/point_cloud.h>
@@ -18,12 +17,12 @@ class HokuyoLidarImporter : public lms::Module {
     bool cycle();
 
    private:
-    void startImporterThread();
-    void prepRawData();
+    std::vector<long> importRawData();
+    std::vector<lms::math::vertex2f> prepRawData(const std::vector<long>& rawData);
+    void setConfigMembers();
 
     qrk::Urg_driver m_lidar;
-    std::vector<long> m_rawDataPoints;
-    bool m_newImport;
+    std::future<std::vector<long>> m_rawDataFuture;
 
     ////////////////////////////// Data Channels ///////////////////////////////
     lms::WriteDataChannel<lms::math::PointCloud2f> data;
@@ -34,12 +33,6 @@ class HokuyoLidarImporter : public lms::Module {
     lms::math::vertex2f m_offsetFromOrigin;
     double m_startAtDeg;
     double m_stopAtDeg;
-
-    /////////////////////////////// Thread & Mutex /////////////////////////////
-    std::mutex m_dataMutex;
-    std::mutex m_lidarMutex;
-    std::thread m_importer;
-    std::atomic_bool a_importerRunning;
 };
 
 #endif  // HOKUYO_LIDAR_IMPORTER_H
