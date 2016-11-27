@@ -1,4 +1,5 @@
 #hokuyo_lidar_importer
+Imports data from a Hokuyo URG-04LX-UG01 LIDAR. The data points are transformed into vertices in the car cartesian plane and written to a data channel as a 2d point cloud. The import is running asynchronously and cycles without new data are NOP.
 
 ###Setup
 Install the driver/library from [here](https://sourceforge.net/projects/urgnetwork/) or use the one from Conan.
