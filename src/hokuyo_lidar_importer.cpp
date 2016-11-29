@@ -73,15 +73,16 @@ std::vector<long> HokuyoLidarImporter::importRawData() {
 
 std::vector<lms::math::vertex2f> HokuyoLidarImporter::prepRawData(
     const std::vector<long>& rawData) {
-    std::vector<lms::math::vertex2f> data;
+    std::vector<lms::math::vertex2f> preppedData;
     for (std::vector<long>::size_type i = 0; i < rawData.size(); i++) {
         long distance = rawData[i];
         double radian = m_lidar.index2rad(i);
         float x = static_cast<float>(distance * cos(radian));
         float y = static_cast<float>(distance * sin(radian));
-        data.push_back(lms::math::vertex2f(x, y) / 1000 + m_offsetFromOrigin);
+        preppedData.push_back(lms::math::vertex2f(x, y) / 1000 +
+                              m_offsetFromOrigin);
     }
-    return data;
+    return preppedData;
 }
 
 void HokuyoLidarImporter::setConfigMembers() {
