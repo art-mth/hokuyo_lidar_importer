@@ -5,7 +5,6 @@
 #include <utility>
 
 namespace {
-const char* kDeviceFile = "/dev/ttyACM0";
 const long kBaudrate = 115200;
 
 template <typename R>
@@ -20,8 +19,8 @@ bool HokuyoLidarImporter::initialize() {
 
     setConfigMembers();
     m_configsChanged = false;
-
-    if (!m_lidar.open(kDeviceFile, kBaudrate, qrk::Urg_driver::Serial)) {
+    std::string kDeviceFile = config().get<std::string>("port","/dev/ttyACM0");
+    if (!m_lidar.open(kDeviceFile.c_str(), kBaudrate, qrk::Urg_driver::Serial)) {
         logger.error() << "Failed opening Hokuyo Lidar at " << kDeviceFile
                        << " error: " << m_lidar.what();
         return false;
