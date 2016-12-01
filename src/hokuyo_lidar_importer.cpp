@@ -86,8 +86,8 @@ std::vector<lms::math::vertex2f> HokuyoLidarImporter::prepRawData(
 }
 
 void HokuyoLidarImporter::setConfigMembers() {
-    m_offsetFromOrigin.x = config().get<float>("xOffsetFromOrigin", 0);
-    m_offsetFromOrigin.y = config().get<float>("yOffsetFromOrigin", 0);
+    m_offsetFromOrigin.x = config().get<float>("xOffsetFromOriginMeter", 0);
+    m_offsetFromOrigin.y = config().get<float>("yOffsetFromOriginMeter", 0);
     m_startAtDeg = config().get<double>("startAtDeg", -90);
     m_stopAtDeg = config().get<double>("stopAtDeg", 90);
 }
