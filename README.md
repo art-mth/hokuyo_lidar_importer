@@ -18,8 +18,10 @@ The Deg values mark the LIDAR range that is evaluated. The Lidar scans in anticl
 - startAtDeg: Minimum Value ~= -119
 - stopAtDeg: Maximum Value ~= 119
 
+- deviceFile: The device file that acts as the interface to the LIDAR. On your Linux Box this will probably be something like `/dev/ttyACM0`. This might be different on the car.
+
 ## FAQ
 
 #### The Lidar is plugged in, but I get an error along the lines of "failed opening serial device". What is the problem?
 
-This is most likely a permission problem. There is a few ways to solve this. If you look at the permissions of `/dev/ttyACM0` you will see something along the lines of `crw-rw---- 1 root dialout`. The easiest way to solve this is to add your user to the dialout group. `sudo adduser $USER dialout`. For this change to take effect either reboot or run `newgrp dialout`.
+This is most likely a permission problem. There is a few ways to solve this. If you look at the permissions of `deviceFile` you will probably see something along the lines of `crw-rw---- 1 root dialout`. The easiest way to solve this is to add your user to the dialout group. `sudo adduser $USER dialout`. For this change to take effect either reboot or run `newgrp dialout`.

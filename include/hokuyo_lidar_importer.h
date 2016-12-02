@@ -2,6 +2,7 @@
 #define HOKUYO_LIDAR_IMPORTER_H
 
 #include <future>
+#include <string>
 #include <vector>
 
 #include <cpp/Urg_driver.h>
@@ -41,6 +42,7 @@ class HokuyoLidarImporter : public lms::Module {
     lms::math::vertex2f m_offsetFromOrigin;
     double m_startAtDeg;
     double m_stopAtDeg;
+    std::string m_deviceFile;
 };
 
 #endif  // HOKUYO_LIDAR_IMPORTER_H
